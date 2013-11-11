@@ -1,0 +1,21 @@
+{
+    "name": "userapp/userapp",
+    "type": "library",
+    "description": "PHP client library for UserApp.",
+    "keywords": ["user management", "user authentication"],
+    "homepage": "http://github.com/userapp-io/userapp-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Robin Orheden",
+            "email": "robin.orheden@userapp.io",
+            "homepage": "https://www.userapp.io/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "autoload": {
+        "psr-0": {"UserApp": "lib/"}
+    }
+}
