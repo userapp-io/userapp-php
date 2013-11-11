@@ -45,7 +45,7 @@ If you pass a string value into the constructor the first argument will be treat
 
 ## Calling services and methods
 
-If you want to call a service/method you can do it by looking at the [API documentation](https://app.userapp.io/#/docs/) and following the pattern below:
+If you want to call a service/method you can do it by looking at the [API documentation](https://app.userapp.io/#/docs/) and following the convention below:
 
     $result = $api->[service]->[method](array([argument] => [value]));
 
