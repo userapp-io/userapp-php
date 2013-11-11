@@ -1,5 +1,4 @@
 # PHP library for UserApp
------------------------------------------------------- 
 
 ## Getting started
 
