@@ -1,4 +1,11 @@
 # PHP library for UserApp
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> 24105f228d30e97b199be2d7f136880a367980d8
+=======
+>>>>>>> 24105f228d30e97b199be2d7f136880a367980d8
 
 ## Getting started
 
@@ -44,32 +51,44 @@ If you pass a string value into the constructor the first argument will be treat
 
 ## Calling services and methods
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+This client has no hard-coded API definitions built into it. It merly acts as a proxy which means that you'll never have to update the client once new API methods are released. If you want to call a service/method all you have to do is look at the [API documentation](https://app.userapp.io/#/docs/) and follow the convention below:
+=======
 If you want to call a service/method you can do it by looking at the [API documentation](https://app.userapp.io/#/docs/) and following the convention below:
+>>>>>>> 24105f228d30e97b199be2d7f136880a367980d8
+=======
+If you want to call a service/method you can do it by looking at the [API documentation](https://app.userapp.io/#/docs/) and following the convention below:
+>>>>>>> 24105f228d30e97b199be2d7f136880a367980d8
 
     $result = $api->[service]->[method](array([argument] => [value]));
 
 #### Some examples
 
-The API [`user.login`](https://app.userapp.io/#/docs/user/#login) and it's arguments `login` and `password`:
+The API [`user.login`](https://app.userapp.io/#/docs/user/#login) and it's arguments `login` and `password` translates to:
 
     $login_result = $api->user->login(array(
         "login" => "test",
         "password" => "test"
     ));
 
-The API [`user.invoice.search`](https://app.userapp.io/#/docs/invoice/#search) and it's argument `user_id`:
+The API [`user.invoice.search`](https://app.userapp.io/#/docs/invoice/#search) and it's argument `user_id` translates to:
 
     $invoices = $api->user->invoice->search(array(
         "user_id" => "test123"
     ));
 
-The API [`property.save`](https://app.userapp.io/#/docs/property/#save) and it's arguments `name`, `type` and `default_value`:
+The API [`property.save`](https://app.userapp.io/#/docs/property/#save) and it's arguments `name`, `type` and `default_value` translates to:
 
-    $property = $api->property->save->search(array(
+    $property = $api->property->save(array(
         "name" => "my new property",
         "type" => "boolean",
         "default_value" => true
     ));
+
+The API [`user.logout`](https://app.userapp.io/#/docs/user/#logout) without any arguments translates to:
+
+    $api->user->logout();
 
 ## Configuration
 
@@ -163,6 +182,25 @@ A more detailed set of examples can be found in /examples.
 
     print_r($search_result->items);
 
+## Versioning
+
+If you want to configure the client to call a specific API version you can do it by either setting the `version` option, or by calling the client using the convention `$api->v[version number]`. If no version is set it will automatically default to `1`.
+
+### Examples
+
+Since no version has been specified, this call will be made against version `1` (default).
+
+    $api->user->login(array("login" => "test", "password" => "test"));
+
+Since the version has been explicitly specified using options, the call will be made against version `2`.
+
+	$api = new \UserApp\API(array("version" => 2));
+    $api->user->login(array("login" => "test", "password" => "test"));
+
+Since the version has been explicitly specified, the call will be made against version `3`.
+
+    $api->v3->user->login(array("login" => "test", "password" => "test"));
+
 ## Error handling
 
 ### Debugging
@@ -199,25 +237,6 @@ Setting `throw_errors` to `false` is more of a way to tell the client to be sile
         }
     }
 
-## Versioning
-
-If you want to configure the client to call a specific API version you can do it by either setting the `version` option, or by calling the client using the pattern `$api->v[version number]`. If no version is set it will automatically default to `1`.
-
-### Examples
-
-Since no version has been specified, this call will be made against version `1` (default).
-
-    $api->user->login(array("login" => "test", "password" => "test"));
-
-Since the version has been explicitly specified using options, the call will be made against version `2`.
-
-	$api = new \UserApp\API(array("version" => 2));
-    $api->user->login(array("login" => "test", "password" => "test"));
-
-Since the version has been explicitly specified, the call will be made against version `3`.
-
-    $api->v3->user->login(array("login" => "test", "password" => "test"));
-
 ## Solving issues
 
 ### See what is being sent to/from UserApp
@@ -237,6 +256,32 @@ You are missing the cURL extension. Follow these instructions to install it: htt
 ##### PHP Fatal error:  Call to undefined function json_encode().
 
 Try executing: `# sudo apt-get install php5-json` (Ubuntu).
+
+## Special cases
+
+Even though this client works as a proxy and there are no hard-coded API definitions built into it. There are still a few tweaks that are API specific.
+
+#### Calling API `user.login` will automatically set the client token
+
+In other words:
+
+	$login_result = $api->user->login(array("login" => "test", "password" => "test"));
+
+Is exactly the same as:
+	
+	$login_result = $api->user->login(array("login" => "test", "password" => "test"));
+	$api->setOption("token", $login_result->token);
+
+#### Calling API `user.logout` will automatically remove the client token
+
+In other words:
+
+	$api->user->logout();
+
+Is exactly the same as:
+	
+	$api->user->logout();
+	$api->setOption("token", null);
 
 ## Dependencies
 

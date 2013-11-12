@@ -8,8 +8,8 @@
 	try
 	{
 		$login_result = $api->user->login(array(
-			"login" => "root",
-			"password" => "root"
+			"login" => "jdoe81",
+			"password" => "joelikesfishi_g"
 		));
 
 		echo(sprintf("Authenticated using token %s and user id %s.<br />\n",
