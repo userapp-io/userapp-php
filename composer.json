@@ -17,5 +17,6 @@
     },
     "autoload": {
         "psr-0": {"UserApp": "lib/"}
-    }
+    },
+    "minimum-stability": "dev"
 }
