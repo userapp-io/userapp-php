@@ -1,11 +1,4 @@
 # PHP library for UserApp
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> 24105f228d30e97b199be2d7f136880a367980d8
-=======
->>>>>>> 24105f228d30e97b199be2d7f136880a367980d8
 
 ## Getting started
 
@@ -51,15 +44,7 @@ If you pass a string value into the constructor the first argument will be treat
 
 ## Calling services and methods
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 This client has no hard-coded API definitions built into it. It merly acts as a proxy which means that you'll never have to update the client once new API methods are released. If you want to call a service/method all you have to do is look at the [API documentation](https://app.userapp.io/#/docs/) and follow the convention below:
-=======
-If you want to call a service/method you can do it by looking at the [API documentation](https://app.userapp.io/#/docs/) and following the convention below:
->>>>>>> 24105f228d30e97b199be2d7f136880a367980d8
-=======
-If you want to call a service/method you can do it by looking at the [API documentation](https://app.userapp.io/#/docs/) and following the convention below:
->>>>>>> 24105f228d30e97b199be2d7f136880a367980d8
 
     $result = $api->[service]->[method](array([argument] => [value]));
 
