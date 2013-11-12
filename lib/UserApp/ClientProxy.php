@@ -52,7 +52,7 @@
 			}
 
 			if($this->_service_name === null && strlen($name) >= 2 && $name[0] == 'v' && is_numeric(substr($name, 1))){
-				$target_version = (int)substr($name, 1;
+				$target_version = (int)substr($name, 1);
 			}
 
 			if($target_version === null){
