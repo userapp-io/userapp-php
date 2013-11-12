@@ -18,5 +18,5 @@
     "autoload": {
         "psr-0": {"UserApp": "lib/"}
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev" 
 }
