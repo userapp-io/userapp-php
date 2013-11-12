@@ -7,7 +7,7 @@
 
 	try
 	{
-		$user_result = $api->test->v2->user->save(array(
+		$user_result = $api->user->save(array(
 			"login" => "epicrawbot",
 			"email" => "epicrobot@userapp.io",
 			"password" => "play_withBitz!"

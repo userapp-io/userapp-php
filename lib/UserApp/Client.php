@@ -50,7 +50,7 @@
 			$service_url = sprintf("%s://%s/v%s/%s.%s", $protocol, $this->_options->base_address, $version, $service, $method);
 
 			if($this->debugMode()){
-				$service_url .= "?\$debug&\$beautify";
+				$service_url .= "?\$debug";
 			}
 
 			$headers = array(
