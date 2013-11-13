@@ -1,0 +1,3 @@
+
+var ApiGen = ApiGen || {};
+ApiGen.elements = [["c","Exception"],["c","UserApp\\API"],["c","UserApp\\Autoloader"],["c","UserApp\\Client"],["c","UserApp\\ClientBase"],["c","UserApp\\ClientOptions"],["c","UserApp\\ClientProxy"],["c","UserApp\\Exceptions\\InvalidConfigurationException"],["c","UserApp\\Exceptions\\NotSupportedException"],["c","UserApp\\Exceptions\\ServiceException"],["c","UserApp\\Exceptions\\TransportException"],["c","UserApp\\Exceptions\\UserAppException"],["c","UserApp\\Http\\CurlTransport"],["c","UserApp\\Http\\FakeTransport"],["c","UserApp\\Http\\ITransport"],["c","UserApp\\Http\\Response"],["c","UserApp\\Logging\\ILogger"],["c","UserApp\\Logging\\MemoryLogger"]];
