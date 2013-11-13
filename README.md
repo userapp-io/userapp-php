@@ -208,7 +208,7 @@ When the option `throw_errors` is set to `true` (default) the client will automa
             case "INVALID_ARGUMENT_USER_ID":
 				throw new Exception("User does not exist");
 			default:
-				throw;
+				throw $exception;
         }
 	}
 
