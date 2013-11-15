@@ -37,6 +37,27 @@
             $this->_proxy->v1->user->invoice->get();
         }
 
+        public function testInsecureMethodCall(){
+            $this->_proxy->setOption("secure", false);
+            $this->_transport->assertNextRequest("POST", "http://api.userapp.io/v1/user.get");
+            $this->_proxy->v1->user->get();
+        }
+
+        public function testBaseAddressMethodCall(){
+            $this->_proxy->setOption("base_address", "10.0.0.1");
+            $this->_transport->assertNextRequest("POST", "https://10.0.0.1/v1/user.get");
+            $this->_proxy->v1->user->get();
+        }
+
+        /**
+          * @expectedException \UserApp\Exceptions\NotSupportedException
+          * @expectedExceptionMessage Unable to call method on base service.
+          */
+        public function testInvalidMethodCall(){
+            $this->_proxy->setOption("secure", false);
+            $this->_proxy->get();
+        }
+
         public function testVersionedMethodCall(){
             $this->_transport->assertNextRequest("POST", "https://api.userapp.io/v2/user.get");
             $this->_proxy->v2->user->get();
