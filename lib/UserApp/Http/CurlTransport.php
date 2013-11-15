@@ -2,6 +2,7 @@
 
 	namespace UserApp\Http;
 
+	use \UserApp\Logging\ILogger;
 	use \InvalidArgumentException;
 	use \UserApp\Exceptions\TransportException;
 	use \UserApp\Exceptions\NotSupportedException;
@@ -12,12 +13,15 @@
 
 		private $_handle;
 		private $_verify_ssl;
+		private $_logger;
 
-		public function __construct($verify_ssl = true){
+		public function __construct($verify_ssl = true, ILogger $logger = null){
 			if (!function_exists('curl_init')) {
 				throw new NotSupportedException('This transport requires that the cURL PHP extension is installed.');
 			}
+
 			$this->_verify_ssl = (bool)$verify_ssl;
+			$this->_logger = $logger;
 		}
 
 		private function getHandle(){
@@ -70,6 +74,8 @@
 				throw new TransportException("cURL error: " . curl_error($handle));
 			}
 
+			$this->log("Recieved response: " . $result);
+
 			return Response::fromRaw($result);
 		}
 
@@ -103,6 +109,14 @@
 			if($this->_handle != null){
 				curl_close($this->_handle);
 				$this->_handle = null;
+			}
+		}
+
+		// Helpers
+
+		private function log($message){
+			if($this->_logger != null){
+				$this->_logger->log($message);
 			}
 		}
 	}
