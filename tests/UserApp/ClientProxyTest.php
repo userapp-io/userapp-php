@@ -54,7 +54,6 @@
           * @expectedExceptionMessage Unable to call method on base service.
           */
         public function testInvalidMethodCall(){
-            $this->_proxy->setOption("secure", false);
             $this->_proxy->get();
         }
 
