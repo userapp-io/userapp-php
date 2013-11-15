@@ -155,7 +155,11 @@
 
 		private function assertConfiguration(){
 			if(!is_string($this->_options->base_address) || strlen($this->_options->base_address) == 0){
-				throw new InvalidConfigurationException("Base Address must be a string value with at least 1 character.");
+				throw new InvalidConfigurationException("Base Address cannot be empty.");
+			}
+
+			if(!is_string($this->_options->app_id) || strlen($this->_options->app_id) == 0){
+				throw new InvalidConfigurationException("App Id cannot be empty.");
 			}
 		}
 

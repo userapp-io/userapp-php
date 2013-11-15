@@ -15,6 +15,7 @@
 
         public function setup(){
             $proxy = $this->_proxy = new ClientProxy(array(
+                "app_id" => "123",
                 "throw_errors" => false
             ));
 
@@ -54,6 +55,7 @@
           * @expectedExceptionMessage Unable to call method on base service.
           */
         public function testInvalidMethodCall(){
+            $this->_proxy->setOption("secure", false);
             $this->_proxy->get();
         }
 
@@ -81,7 +83,6 @@
 
         public function testAppIdAuthentication(){
             $arguments = array("user_id" => "abc");
-            $this->_proxy->setOption('app_id', '123');
             
             $header_test = function($test, $headers){
                 $test->assertEquals($headers["Authorization"], "Basic " . base64_encode("123:"));
@@ -97,7 +98,7 @@
             $this->_proxy->setOption('token', '321');
             
             $header_test = function($test, $headers){
-                $test->assertEquals($headers["Authorization"], "Basic " . base64_encode(":321"));
+                $test->assertEquals($headers["Authorization"], "Basic " . base64_encode("123:321"));
             };
 
             $this->_transport->assertNextRequest("POST", "https://api.userapp.io/v1/user.get", $header_test);
