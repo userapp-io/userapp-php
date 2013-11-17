@@ -1,10 +1,6 @@
-before_commands:
-    - "composer install --dev --prefer-source"
-
 tools:
     php_code_coverage:
         enabled: true
-        test_command: phpunit -c phpunit.xml.dist
         filter:
             paths: ["lib/*"]
     php_code_sniffer:
