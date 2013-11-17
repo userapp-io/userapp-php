@@ -121,10 +121,6 @@
             $this->_proxy->user->get($arguments);
         }
 
-        public function testDefinitiveFail(){
-            $this->assertTrue(false);
-        }
-
         public function teardown(){
             $this->_transport->assertEmptyQueue();
         }
