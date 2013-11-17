@@ -1,6 +1,7 @@
 # PHP library for UserApp
 
 [![Build Status](https://travis-ci.org/userapp-io/userapp-php.png)](https://travis-ci.org/userapp-io/userapp-php)
+[![Code Quality](https://scrutinizer-ci.com/g/userapp-io/userapp-php/badges/quality-score.png?s=4731b8e33e4f5866f28a1b9cafb23b83d39d9792)](https://scrutinizer-ci.com/g/userapp-io/userapp-php/)
 
 ## Getting started
 
