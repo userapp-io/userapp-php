@@ -113,7 +113,7 @@ The easiest way to set a local scoped option is to do it in the constructor when
 
 If you want to set an option after the client has been created you can do it as shown below.
 
-    $api->setOption("debug" => true);
+    $api->setOption("debug", true);
 
 Setting multiple options is done almost the same way.
 
