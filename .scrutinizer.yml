@@ -8,9 +8,7 @@ tools:
     php_cpd:
         filter:
             excluded_paths: ['tests/*', 'examples/*', 'bin/*', 'docs/*']
-    php_pdepend: 
-        filter:
-            excluded_paths: ['tests/*', 'examples/*', 'bin/*', 'docs/*']
+    php_pdepend: true
     php_mess_detector:
         filter:
             excluded_paths: ['tests/*', 'examples/*', 'bin/*', 'docs/*']
