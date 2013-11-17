@@ -4,3 +4,5 @@ php:
   - 5.4
   - 5.5
 script: phpunit -c phpunit.xml.travisci
+notifications:
+  email: false
