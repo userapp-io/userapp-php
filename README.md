@@ -1,5 +1,7 @@
 # PHP library for UserApp
 
+[![Build Status](https://travis-ci.org/userapp-io/userapp-php.png)](https://travis-ci.org/userapp-io/userapp-php)
+
 ## Getting started
 
 ### Finding your App Id and Token
