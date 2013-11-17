@@ -11,7 +11,7 @@
 	use \UserApp\Exceptions\ServiceException;
 	use \UserApp\Exceptions\TransportException;
 	use \UserApp\Exceptions\InvalidConfigurationException;
-
+	
 	class Client extends ClientBase {
 		const CLIENT_VERSION = "0.1";
 
