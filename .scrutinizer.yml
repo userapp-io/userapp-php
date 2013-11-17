@@ -8,7 +8,9 @@ tools:
     php_cpd:
         filter:
             excluded_paths: ['tests/*', 'examples/*', 'bin/*', 'docs/*']
-    php_pdepend: true
+    php_pdepend: 
+        filter:
+            excluded_paths: ['tests/*', 'examples/*', 'bin/*', 'docs/*']
     php_mess_detector:
         filter:
             excluded_paths: ['tests/*', 'examples/*', 'bin/*', 'docs/*']
@@ -45,4 +47,6 @@ tools:
         filter:
             excluded_paths: ['tests/*', 'examples/*', 'bin/*', 'docs/*']
     php_code_coverage: false
-    php_loc: true
+    php_loc:
+        filter:
+            excluded_paths: ['tests/*', 'examples/*', 'bin/*', 'docs/*']
