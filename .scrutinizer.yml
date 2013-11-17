@@ -21,7 +21,7 @@ tools:
         config:
             level: all
         filter:
-            paths: ["lib/*", "tests/UserApp/*"]
+            paths: ["lib/*"]
     php_loc:
         enabled: true
     php_mess_detector:
@@ -34,5 +34,5 @@ tools:
     php_analyzer: true
     php_analyzer:
         filter:
-            paths: ["lib/*", "tests/UserApp/*"]
+            paths: ["lib/*"]
     sensiolabs_security_checker: true
