@@ -15,7 +15,31 @@ If you don't have a UserApp account, you need to [create one](https://app.userap
 
 ### Loading the library
 
-UserApp relies on the autoloading features of PHP to load its files when needed. The autoloading complies with the PSR-0 standard which makes it compatible with most of the major frameworks and libraries. Autoloading in your application is handled automatically when managing the dependencies with [Composer](https://packagist.org/packages/userapp/userapp), but you can also leverage its own autoloader class if you are going to use it in a project or script without any PSR-0 compliant autoloading facility:
+UserApp relies on the autoloading features of PHP to load its files when needed. The autoloading complies with the PSR-0 standard which makes it compatible with most of the major frameworks and libraries. Autoloading in your application is handled automatically when managing the dependencies with [Composer](https://packagist.org/packages/userapp/userapp).
+    
+#### Using Composer? Add this to your `composer.json`
+
+	{
+		"repositories": [
+			{
+				"type": "package",
+				"package": {
+					"name": "userapp/userapp",
+					"version": "1.0",
+					"source": {
+						"url": "https://github.com/userapp-io/userapp-php.git",
+						"type": "git",
+						"reference": "master"
+					}
+				}
+			}
+		],
+		"require": {
+			"userapp/userapp": "*",
+		}
+	}
+
+#### Not using Composer? Use the library Autoloader to load the library yourself
 
     require 'UserApp/Autoloader.php';
     UserApp\Autoloader::register();
