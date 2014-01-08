@@ -20,20 +20,6 @@ UserApp relies on the autoloading features of PHP to load its files when needed.
 #### Using Composer? Add this to your `composer.json`
 
 	{
-		"repositories": [
-			{
-				"type": "package",
-				"package": {
-					"name": "userapp/userapp",
-					"version": "1.0",
-					"source": {
-						"url": "https://github.com/userapp-io/userapp-php.git",
-						"type": "git",
-						"reference": "master"
-					}
-				}
-			}
-		],
 		"require": {
 			"userapp/userapp": "*",
 		}
