@@ -39,7 +39,7 @@ UserApp relies on the autoloading features of PHP to load its files when needed.
 		}
 	}
 
-#### Not using Composer? Use the library Autoloader to load the library yourself
+#### Not using Composer? Use the library's own Autoloader
 
     require 'UserApp/Autoloader.php';
     UserApp\Autoloader::register();
