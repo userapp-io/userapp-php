@@ -63,20 +63,20 @@ This client has no hard-coded API definitions built into it. It merly acts as a 
 
 #### Some examples
 
-The API [`user.login`](https://app.userapp.io/#/docs/user/#login) and it's arguments `login` and `password` translates to:
+The API [`user.login`](https://app.userapp.io/#/docs/user/#login) and its arguments `login` and `password` translates to:
 
     $login_result = $api->user->login(array(
         "login" => "test",
         "password" => "test"
     ));
 
-The API [`user.invoice.search`](https://app.userapp.io/#/docs/invoice/#search) and it's argument `user_id` translates to:
+The API [`user.invoice.search`](https://app.userapp.io/#/docs/invoice/#search) and its argument `user_id` translates to:
 
     $invoices = $api->user->invoice->search(array(
         "user_id" => "test123"
     ));
 
-The API [`property.save`](https://app.userapp.io/#/docs/property/#save) and it's arguments `name`, `type` and `default_value` translates to:
+The API [`property.save`](https://app.userapp.io/#/docs/property/#save) and its arguments `name`, `type` and `default_value` translates to:
 
     $property = $api->property->save(array(
         "name" => "my new property",
@@ -257,7 +257,7 @@ Try executing: `# sudo apt-get install php5-json` (Ubuntu).
 
 ## Special cases
 
-Even though this client works as a proxy and there are no hard-coded API definitions built into it. There are still a few tweaks that are API specific.
+Even though this client works as a proxy and there are no hard-coded API definitions built into it, there are still a few tweaks that are API specific.
 
 #### Calling API `user.login` will automatically set the client token
 
