@@ -97,7 +97,7 @@ Options determine the configuration of a client. If no options are passed to a c
 * **Version** (`version`): Version of the API to call against. Default `1`.
 * **App Id** (`app_id`): App to authenticate against. Default `null`.
 * **Token** (`token`): Token to authenticate with. Default `null`.
-* **Debug mode** (`debug`): Log steps performed when sending/recieving data from UserApp. Default: `false`.
+* **Debug mode** (`debug`): Log steps performed when sending/receiving data from UserApp. Default: `false`.
 * **Secure mode** (`secure`): Call the API using HTTPS. Default: `true`.
 * **Base address** (`base_address`): The address to call against. Default: `api.userapp.io`.
 * **Throw errors** (`throw_errors`): Whether or not to throw an exception when response is an error. I.e. result `{"error_code":"SOME_ERROR","message":"Some message"}` results in an exception of type `\UserApp\Exceptions\ServiceException`.
@@ -203,7 +203,7 @@ Since the version has been explicitly specified, the call will be made against v
 
 ### Debugging
 
-Sometimes to debug an API error it's important to see what is being sent/recieved from the calls that one make to understand the underlying reason. If you're interested in seeing these logs, you can set the client option `debug` to `true`, then print the logs after you've made your API call (as shown below).
+Sometimes to debug an API error it's important to see what is being sent/received from the calls that one make to understand the underlying reason. If you're interested in seeing these logs, you can set the client option `debug` to `true`, then print the logs after you've made your API call (as shown below).
 
 	$api = new \UserApp\API(array("debug" => true));
     $api->user->login(array("login" => "test", "password" => "test"));
@@ -231,7 +231,7 @@ Setting `throw_errors` to `false` is more of a way to tell the client to be sile
 
 	if(is_object($result) && isset($result->error_code)){
 		if($result->error_code == "INVALID_ARGUMENT_USER_ID"){
-            // Handle sepcific error
+            // Handle specific error
         }
     }
 

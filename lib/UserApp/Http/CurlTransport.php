@@ -74,7 +74,7 @@
 				throw new TransportException("cURL error: " . curl_error($handle));
 			}
 
-			$this->log("Recieved response: " . $result);
+			$this->log("Received response: " . $result);
 
 			return Response::fromRaw($result);
 		}
