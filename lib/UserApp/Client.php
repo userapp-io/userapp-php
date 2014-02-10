@@ -68,12 +68,12 @@
 			$this->assertResponse($response);
 
 			if($response->status->code != 200){
-				throw new TransportException(sprintf("Expected 200 OK response. Recieved %s %s.",
+				throw new TransportException(sprintf("Expected 200 OK response. Received %s %s.",
 					$response->status->code, $response->status->message));
 			}
 
 			if($this->debugMode()){
-				$this->log(sprintf("Recieved response with status '%s' and headers '%s'.",
+				$this->log(sprintf("Received response with status '%s' and headers '%s'.",
 					json_encode($response->status), json_encode($response->headers)));
 			}
 
