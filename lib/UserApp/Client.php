@@ -60,7 +60,7 @@
 			);
 
 			if($this->debugMode()){
-				$this->log(sprintf("Sending POST request to '%s' with headers '%s' and body '%s'.",
+				$this->log(sprintf("Sending POST Request to '%s' with headers '%s' and body '%s'.",
 					$service_url, json_encode($headers), json_encode($arguments)));
 			}
 
