@@ -1,6 +1,5 @@
 <?php
 
-	require("../autoload.php");
 	require("config.php");
 
 	$api = new \UserApp\API(USERAPP_APP_ID);

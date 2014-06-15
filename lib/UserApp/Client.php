@@ -7,12 +7,17 @@
 	use \InvalidArgumentException;
 	use \BadMethodCallException;
 
+	use \Sabre\Event\EventEmitterTrait;
+	use \Sabre\Event\EventEmitterInterface;
+
 	use \UserApp\Exceptions\UserAppException;
 	use \UserApp\Exceptions\ServiceException;
 	use \UserApp\Exceptions\TransportException;
 	use \UserApp\Exceptions\InvalidConfigurationException;
 	
-	class Client extends ClientBase {
+	class Client extends ClientBase implements EventEmitterInterface {
+		use EventEmitterTrait;
+
 		const CLIENT_VERSION = "0.1";
 
 		public function __construct(){
@@ -67,7 +72,7 @@
 			$response = $this->getTransport()->request('POST', $service_url, $headers, json_encode($arguments));
 			$this->assertResponse($response);
 
-			if($response->status->code != 200){
+			if($response->status->code != 200 && $response->status->code != 401){
 				throw new TransportException(sprintf("Expected 200 OK response. Received %s %s.",
 					$response->status->code, $response->status->message));
 			}
@@ -77,6 +82,8 @@
 					json_encode($response->status), json_encode($response->headers)));
 			}
 
+			$has_error = false;
+			$call_context = self::buildCallContext($version, $service, $method, $arguments);
 			$result = $this->processContentType($response->headers["Content-Type"], $response->body);
 
 			if(is_object($result)){
@@ -89,9 +96,12 @@
 							throw new BadMethodCallException("Call to invalid method '$method()'.");
 							break;
 						default:
+							$has_error = true;
+							
 							if($this->_options->throw_errors){
 								$generated_exception = new ServiceException($result->error_code, $result->message);
 							}
+
 							break;
 					}
 				}else{
@@ -124,6 +134,18 @@
 				foreach($logs as $log){
 					$this->log($log->message, $log->type, $log->created_at);
 				}
+			}
+
+			if($has_error){
+				$error_code = srttolower($result->error_code);
+
+				if($error_code == 'invalid_credentials' || $error_code == 'unauthorized'){
+					$this->emit('unauthorized', [$this, $call_context, &$result]);
+				}
+
+				$this->emit('error.'.$error_code, [$this, $call_context, &$result]);
+			}else{
+				$this->emit('success', [$this, $call_context, &$result]);
 			}
 
 			if($generated_exception != null){
@@ -197,6 +219,14 @@
 			if(!is_array($response->headers)){
 				throw new InvalidArgumentException("Response headers must be an array.");
 			}
+		}
+
+		private static function buildCallContext($version, $service, $method, $arguments){
+			$result = new \stdClass();
+			$result->version = $version;
+			$result->service = $service;
+			$result->method = $method;
+			$result->arguments = $arguments;
 		}
 	}
 

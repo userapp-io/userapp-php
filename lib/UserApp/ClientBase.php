@@ -5,11 +5,11 @@
 	use \InvalidArgumentException;
 	
 	abstract class ClientBase {
-		private $_source;
-
 		protected $_options;
 		protected $_transport;
 		protected $_logger;
+
+		private $_source;
 
 		public function __construct(Client $source){
 			$this->_source = $source;

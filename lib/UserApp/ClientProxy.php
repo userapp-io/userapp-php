@@ -27,6 +27,10 @@
 			parent::__construct($this->_client);
 		}
 
+	    public function on($event_name, callable $callback, $priority = 100) {
+	    	$this->_client->on($event_name, $callback, $priority);
+	    }
+
 		public function __call($method, $arguments){
 			$call_arguments = null;
 
