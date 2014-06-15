@@ -8,7 +8,7 @@
 
     require_once(__DIR__ . "/../bootstrap.php");
 
-    class ClientProxyTest extends PHPUnit_Framework_TestCase
+    class ClientEventTest extends PHPUnit_Framework_TestCase
     {
         private $_proxy;
         private $_transport;
@@ -20,109 +20,26 @@
             ));
 
             $transport = $this->_transport = new TestTransport($this);
+
             $proxy->setTransport($transport);
         }
 
-        public function testDefaultVersionedMethodCall(){
-            $this->_transport->assertNextRequest("POST", "https://api.userapp.io/v1/user.get");
-            $this->_proxy->user->get();
-        }
+        public function testThatEventIsEmittedOnError(){
+            $received_events = [];
 
-        public function testMethodCall(){
-            $this->_transport->assertNextRequest("POST", "https://api.userapp.io/v1/user.get");
-            $this->_proxy->v1->user->get();
-        }
+            $this->_proxy->on('success', function($sender, $call_context, $error) use (&$received_events){
+                $received_events[] = array('name' => 'error', 'error' => $error);
+            });
 
-        public function testDeepServiceCall(){
-            $this->_transport->assertNextRequest("POST", "https://api.userapp.io/v1/user.invoice.get");
-            $this->_proxy->v1->user->invoice->get();
-        }
-
-        public function testInsecureMethodCall(){
-            $this->_proxy->setOption("secure", false);
-            $this->_transport->assertNextRequest("POST", "http://api.userapp.io/v1/user.get");
-            $this->_proxy->v1->user->get();
-        }
-
-        public function testBaseAddressMethodCall(){
-            $this->_proxy->setOption("base_address", "10.0.0.1");
-            $this->_transport->assertNextRequest("POST", "https://10.0.0.1/v1/user.get");
-            $this->_proxy->v1->user->get();
-        }
-
-        /**
-          * @expectedException \UserApp\Exceptions\NotSupportedException
-          * @expectedExceptionMessage Unable to call method on base service.
-          */
-        public function testInvalidMethodCall(){
-            $this->_proxy->setOption("secure", false);
-            $this->_proxy->get();
-        }
-
-        public function testVersionedMethodCall(){
-            $this->_transport->assertNextRequest("POST", "https://api.userapp.io/v2/user.get");
-            $this->_proxy->v2->user->get();
-        }
-
-        public function testMethodCallWithArguments(){
-            $arguments = array("user_id" => "abc");
-            $this->_transport->assertNextRequest("POST", "https://api.userapp.io/v1/user.get", null, json_encode($arguments));
-            $this->_proxy->user->get($arguments);
-        }
-
-        public function testJsonMethodCall(){
-            $arguments = array("user_id" => "abc");
+            $this->_proxy->on('error', function($sender, $call_context, $error) use (&$received_events){
+                $received_events[] = array('name' => 'error', 'error' => $error);
+            });
             
-            $header_test = function($test, $headers){
-                $test->assertEquals($headers["Content-Type"], "application/json");
-            };
+            $result = $this->_proxy->user->get();
 
-            $this->_transport->assertNextRequest("POST", "https://api.userapp.io/v1/user.get", $header_test, json_encode($arguments));
-            $this->_proxy->user->get($arguments);
-        }
-
-        public function testAppIdAuthentication(){
-            $arguments = array("user_id" => "abc");
-            
-            $header_test = function($test, $headers){
-                $test->assertEquals($headers["Authorization"], "Basic " . base64_encode("123:"));
-            };
-
-            $this->_transport->assertNextRequest("POST", "https://api.userapp.io/v1/user.get", $header_test);
-            $this->_proxy->user->get($arguments);
-        }
-
-        public function testTokenAuthentication(){
-            $arguments = array("user_id" => "abc");
-
-            $this->_proxy->setOption('token', '321');
-            
-            $header_test = function($test, $headers){
-                $test->assertEquals($headers["Authorization"], "Basic " . base64_encode("123:321"));
-            };
-
-            $this->_transport->assertNextRequest("POST", "https://api.userapp.io/v1/user.get", $header_test);
-            $this->_proxy->user->get($arguments);
-        }
-
-        public function testFullAuthentication(){
-            $arguments = array("user_id" => "abc");
-
-            $this->_proxy->setOptions(array(
-                'app_id' => '123',
-                'token' => '321'
-            ));
-            
-            $header_test = function($test, $headers){
-                $test->assertEquals($headers["Authorization"], "Basic " . base64_encode("123:321"));
-            };
-
-            $this->_transport->assertNextRequest("POST", "https://api.userapp.io/v1/user.get", $header_test);
-            $this->_proxy->user->get($arguments);
-        }
-
-        public function teardown(){
-            $this->_transport->assertEmptyQueue();
+            $this->assertTrue(count($received_events) == 1);
+            $this->assertTrue($received_events[0]['name'] == 'error');
+            $this->assertTrue($received_events[0]['error']->error_code == 'FAKE_RESULT');
         }
     }
 
