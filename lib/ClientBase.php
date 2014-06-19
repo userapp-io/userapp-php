@@ -67,8 +67,9 @@
 		public function getTransport(){
 			// If not set, then set the default transport.
 			if($this->_source->_transport == null){
-				$this->setTransport(new Http\CurlTransport());
+				$this->setTransport(ClientOptions::getGlobal()->transport);
 			}
+
 			return $this->_source->_transport;
 		}
 

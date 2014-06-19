@@ -227,6 +227,7 @@
 			$result->service = $service;
 			$result->method = $method;
 			$result->arguments = $arguments;
+			return $result;
 		}
 	}
 

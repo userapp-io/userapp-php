@@ -3,6 +3,7 @@
 	namespace UserApp;
 
 	use \InvalidArgumentException;
+	use \UserApp\Http\CurlTransport;
 
 	class ClientOptions {
 		private static $_global;
@@ -14,7 +15,8 @@
 			"app_id" => null,
 			"token" => null,
 			"base_address" => "api.userapp.io",
-			"throw_errors" => true
+			"throw_errors" => true,
+			"transport" => null
 		);
 
 		public function __construct($options = null){
@@ -41,6 +43,15 @@
 			if(!array_key_exists($name, $this->_options)){
 				throw new InvalidArgumentException("Unable to get option. Option '".$name."' does not exist.");
 			}
+
+			if($name == 'transport' && $this->_options[$name] === null){
+				$global = self::getGlobal();
+
+				if($this === $global){
+					$global->transport = new CurlTransport();
+				}
+			}
+
 			return $this->_options[$name];
 		}
 
