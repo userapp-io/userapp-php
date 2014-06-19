@@ -9,10 +9,12 @@
 	class TestTransport implements ITransport {
 		private $_test;
 		private $_assertion_queue;
+		private $_response_table;
 
 		public function __construct($test){
 			$this->_test = $test;
 			$this->_assertion_queue = array();
+			$this->_response_table = array();
 		}
 
 		public function request($method, $url, $headers = null, $body = null){
@@ -38,7 +40,17 @@
 				}
 			}
 
-			return $this->getMockResponse();
+			$response_data = null;
+
+			if(isset($this->_response_table[$url])){
+				$response_data = $this->_response_table[$url];
+			}
+
+			return $this->getMockResponse($response_data);
+		}
+
+		public function forRequestRespondWith($url_request, $response){
+			$this->_response_table[$url_request]=$response;
 		}
 
 		public function assertNextRequest($method, $url, $headers = null, $body = null){
@@ -54,7 +66,7 @@
 			$this->_test->assertEmpty($this->_assertion_queue);
 		}
 
-		private function getMockResponse(){
+		private function getMockResponse($body = null){
 			$response = new Response();
 
 			$status = new stdClass();
@@ -64,7 +76,7 @@
 
 			$response->status = $status;
 			$response->headers = array("Content-Type" => "application/json");
-			$response->body = json_encode(array("error_code" => "FAKE_RESULT", "message" => "This is a fake result."));
+			$response->body = json_encode($body === null ? array("error_code" => "FAKE_RESULT", "message" => "This is a fake result.") : $body);
 
 			return $response;
 		}

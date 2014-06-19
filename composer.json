@@ -17,7 +17,7 @@
         "sabre/event": "1.0.0"
     },
     "autoload": {
-        "psr-0": {"UserApp": "lib/"}
+        "psr-0": {"UserApp\\": "lib/"}
     },
     "minimum-stability": "dev" 
 }
