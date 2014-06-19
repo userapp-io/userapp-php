@@ -21,7 +21,7 @@ UserApp relies on the autoloading features of PHP to load its files when needed.
 
 	{
 		"require": {
-			"userapp/userapp": "1.0.0"
+			"userapp/userapp": "~1.0.0"
 		}
 	}
 
