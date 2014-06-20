@@ -198,6 +198,20 @@ Since the version has been explicitly specified using options, the call will be 
 Since the version has been explicitly specified, the call will be made against version `3`.
 
     $api->v3->user->login(array("login" => "test", "password" => "test"));
+    
+## Events
+
+This library emits the following events:
+
+* **success** Emitted when a call succeeds.
+* **error** Emitted when a call results in an error.
+* **unauthorized** Emitted when a call results in an authentication error. Emitted before emitting the *error* event.
+
+### Listening to events
+
+	$api->on('success', function($sender, $call_context, $result){
+		echo(sprintf("Call to %s.%s resulted in %s", $call_context->service, $call_context->method, json_encode($result)));
+	});
 
 ## Error handling
 
@@ -234,6 +248,21 @@ Setting `throw_errors` to `false` is more of a way to tell the client to be sile
             // Handle specific error
         }
     }
+
+### Intercepting errors with events
+
+#### All errors
+
+	$api->on('error', function($sender, $call_context, $error){
+		echo(sprintf("Call to %s.%s resulted in error %s (%s)", $call_context->service, $call_context->method, $error->message, $error->error_code)));
+	});
+
+#### Only unauthorized events
+
+	$api->on('unauthorized', function($sender, $call_context, $error){
+		header("Location: /login.php");
+		die();
+	});
 
 ## Solving issues
 
@@ -285,6 +314,7 @@ Is exactly the same as:
 
 * PHP >= 5.3.2
 * [cURL](http://php.net/manual/en/book.curl.php)
+* [sabre/event](https://github.com/fruux/sabre-event)
 
 ## License
 
