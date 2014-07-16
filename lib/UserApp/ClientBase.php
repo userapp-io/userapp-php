@@ -2,9 +2,10 @@
 
 	namespace UserApp;
 
+	use \UserApp\Event\EventEmitter;
 	use \InvalidArgumentException;
 	
-	abstract class ClientBase {
+	abstract class ClientBase extends EventEmitter {
 		protected $_options;
 		protected $_transport;
 		protected $_logger;

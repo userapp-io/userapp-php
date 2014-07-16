@@ -7,17 +7,12 @@
 	use \InvalidArgumentException;
 	use \BadMethodCallException;
 
-	use \Sabre\Event\EventEmitterTrait;
-	use \Sabre\Event\EventEmitterInterface;
-
 	use \UserApp\Exceptions\UserAppException;
 	use \UserApp\Exceptions\ServiceException;
 	use \UserApp\Exceptions\TransportException;
 	use \UserApp\Exceptions\InvalidConfigurationException;
 	
-	class Client extends ClientBase implements EventEmitterInterface {
-		use EventEmitterTrait;
-
+	class Client extends ClientBase {
 		const CLIENT_VERSION = "0.1";
 
 		public function __construct(){
