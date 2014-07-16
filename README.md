@@ -313,7 +313,6 @@ Is exactly the same as:
 
 * PHP >= 5.3.2
 * [cURL](http://php.net/manual/en/book.curl.php)
-* [sabre/event](https://github.com/fruux/sabre-event)
 
 ## License
 
