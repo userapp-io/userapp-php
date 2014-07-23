@@ -13,7 +13,7 @@
 	use \UserApp\Exceptions\InvalidConfigurationException;
 	
 	class Client extends ClientBase {
-		const CLIENT_VERSION = "0.1";
+		const CLIENT_VERSION = "1.1.5";
 
 		public function __construct(){
 			parent::__construct($this);

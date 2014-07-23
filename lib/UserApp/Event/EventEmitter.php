@@ -29,7 +29,7 @@
 	ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 	POSSIBILITY OF SUCH DAMAGE.*/
 
-	/*Modified a part of Sabre\Event instead of linking due to PHP 5.3 compatibility (traits does not exist in 5.3). */
+	/*Modified a part of Sabre\Event instead of linking due to PHP 5.3 compatibility (traits nor short arrays does not exist in 5.3). */
 
 	namespace UserApp\Event;
 
@@ -48,7 +48,7 @@
 	     *
 	     * @var array
 	     */
-	    protected $listeners = [];
+	    protected $listeners = array();
 
 	    /**
 	     * Subscribe to an event.
@@ -61,38 +61,16 @@
 	    public function on($eventName, callable $callBack, $priority = 100) {
 
 	        if (!isset($this->listeners[$eventName])) {
-	            $this->listeners[$eventName] = [
+	            $this->listeners[$eventName] = array(
 	                true,  // If there's only one item, it's sorted
-	                [$priority],
-	                [$callBack]
-	            ];
+	                array($priority),
+	                array($callBack)
+	            );
 	        } else {
 	            $this->listeners[$eventName][0] = false; // marked as unsorted
 	            $this->listeners[$eventName][1][] = $priority;
 	            $this->listeners[$eventName][2][] = $callBack;
 	        }
-
-	    }
-
-	    /**
-	     * Subscribe to an event exactly once.
-	     *
-	     * @param string $eventName
-	     * @param callable $callBack
-	     * @param int $priority
-	     * @return void
-	     */
-	    public function once($eventName, callable $callBack, $priority = 100) {
-
-	        $wrapper = null;
-	        $wrapper = function() use ($eventName, $callBack, &$wrapper) {
-
-	            $this->removeListener($eventName, $wrapper);
-	            $result = call_user_func_array($callBack, func_get_args());
-
-	        };
-
-	        $this->on($eventName, $wrapper);
 
 	    }
 
@@ -122,7 +100,7 @@
 	     * @param callback $continueCallBack
 	     * @return bool
 	     */
-	    public function emit($eventName, array $arguments = [], callable $continueCallBack = null) {
+	    public function emit($eventName, array $arguments = array(), callable $continueCallBack = null) {
 
 	        if (is_null($continueCallBack)) {
 
@@ -171,7 +149,7 @@
 	    public function listeners($eventName) {
 
 	        if (!isset($this->listeners[$eventName])) {
-	            return [];
+	            return array();
 	        }
 
 	        // The list is not sorted
@@ -229,7 +207,7 @@
 	        if (!is_null($eventName)) {
 	            unset($this->listeners[$eventName]);
 	        } else {
-	            $this->listeners = [];
+	            $this->listeners = array();
 	        }
 
 	    }
