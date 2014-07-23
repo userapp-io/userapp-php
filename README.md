@@ -21,7 +21,7 @@ UserApp relies on the autoloading features of PHP to load its files when needed.
 
 	{
 		"require": {
-			"userapp/userapp": "~1.0.0"
+			"userapp/userapp": "~1.1.0"
 		}
 	}
 
@@ -313,7 +313,6 @@ Is exactly the same as:
 
 * PHP >= 5.3.2
 * [cURL](http://php.net/manual/en/book.curl.php)
-* [sabre/event](https://github.com/fruux/sabre-event)
 
 ## License
 
