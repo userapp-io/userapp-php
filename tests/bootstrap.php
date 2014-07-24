@@ -1,8 +1,6 @@
 <?php
 
-	$loader = require __DIR__ . "/../vendor/autoload.php";
-	$loader->addPsr4('UserApp\\', __DIR__.'/UserApp');
-
+	$loader = require __DIR__ . "/../autoload.php";
     require(dirname(__FILE__) . "/Core/TestTransport.php");
 
 ?>

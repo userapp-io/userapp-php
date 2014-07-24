@@ -54,22 +54,25 @@
 	     * Subscribe to an event.
 	     *
 	     * @param string $eventName
-	     * @param callable $callBack
+	     * @param callable $callback
 	     * @param int $priority
 	     * @return void
 	     */
-	    public function on($eventName, callable $callBack, $priority = 100) {
+	    public function on($eventName, $callback, $priority = 100) {
+	    	if(!is_callable($callback)){
+	    		throw new \InvalidArgumentException("Argument 'callback' is not callable.");
+	    	}
 
 	        if (!isset($this->listeners[$eventName])) {
 	            $this->listeners[$eventName] = array(
 	                true,  // If there's only one item, it's sorted
 	                array($priority),
-	                array($callBack)
+	                array($callback)
 	            );
 	        } else {
 	            $this->listeners[$eventName][0] = false; // marked as unsorted
 	            $this->listeners[$eventName][1][] = $priority;
-	            $this->listeners[$eventName][2][] = $callBack;
+	            $this->listeners[$eventName][2][] = $callback;
 	        }
 
 	    }
@@ -80,7 +83,7 @@
 	     * This method will return true if 0 or more listeners were succesfully
 	     * handled. false is returned if one of the events broke the event chain.
 	     *
-	     * If the continueCallBack is specified, this callback will be called every
+	     * If the continueCallback is specified, this callback will be called every
 	     * time before the next event handler is called.
 	     *
 	     * If the continueCallback returns false, event propagation stops. This
@@ -97,13 +100,15 @@
 	     *
 	     * @param string $eventName
 	     * @param array $arguments
-	     * @param callback $continueCallBack
+	     * @param callback $continueCallback
 	     * @return bool
 	     */
-	    public function emit($eventName, array $arguments = array(), callable $continueCallBack = null) {
+	    public function emit($eventName, array $arguments = array(), $continueCallback = null) {
+	    	if($continueCallback !== null && !is_callable($continueCallback)){
+	    		throw new \InvalidArgumentException("Argument 'continueCallback' is not callable.");
+	    	}
 
-	        if (is_null($continueCallBack)) {
-
+	        if (is_null($continueCallback)) {
 	            foreach($this->listeners($eventName) as $listener) {
 
 	                $result = call_user_func_array($listener, $arguments);
@@ -126,7 +131,7 @@
 	                }
 
 	                if ($counter>0) {
-	                    if (!$continueCallBack()) break;
+	                    if (!$continueCallback()) break;
 	                }
 
 	            }
@@ -176,7 +181,10 @@
 	     * @param callable $listener
 	     * @return bool
 	     */
-	    public function removeListener($eventName, callable $listener) {
+	    public function removeListener($eventName, $listener) {
+	    	if(!is_callable($listener)){
+	    		throw new \InvalidArgumentException("Argument 'listener' is not callable.");
+	    	}
 
 	        if (!isset($this->listeners[$eventName])) {
 	            return false;
