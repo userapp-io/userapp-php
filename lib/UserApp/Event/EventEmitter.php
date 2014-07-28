@@ -53,28 +53,27 @@
 	    /**
 	     * Subscribe to an event.
 	     *
-	     * @param string $eventName
+	     * @param string $event_name
 	     * @param callable $callback
 	     * @param int $priority
 	     * @return void
 	     */
-	    public function on($eventName, $callback, $priority = 100) {
+	    public function on($event_name, $callback, $priority = 100) {
 	    	if(!is_callable($callback)){
 	    		throw new \InvalidArgumentException("Argument 'callback' is not callable.");
 	    	}
 
-	        if (!isset($this->listeners[$eventName])) {
-	            $this->listeners[$eventName] = array(
+	        if (!isset($this->listeners[$event_name])) {
+	            $this->listeners[$event_name] = array(
 	                true,  // If there's only one item, it's sorted
 	                array($priority),
 	                array($callback)
 	            );
 	        } else {
-	            $this->listeners[$eventName][0] = false; // marked as unsorted
-	            $this->listeners[$eventName][1][] = $priority;
-	            $this->listeners[$eventName][2][] = $callback;
+	            $this->listeners[$event_name][0] = false; // marked as unsorted
+	            $this->listeners[$event_name][1][] = $priority;
+	            $this->listeners[$event_name][2][] = $callback;
 	        }
-
 	    }
 
 	    /**
@@ -83,10 +82,10 @@
 	     * This method will return true if 0 or more listeners were succesfully
 	     * handled. false is returned if one of the events broke the event chain.
 	     *
-	     * If the continueCallback is specified, this callback will be called every
+	     * If the continue_callback is specified, this callback will be called every
 	     * time before the next event handler is called.
 	     *
-	     * If the continueCallback returns false, event propagation stops. This
+	     * If the continue_callback returns false, event propagation stops. This
 	     * allows you to use the eventEmitter as a means for listeners to implement
 	     * functionality in your application, and break the event loop as soon as
 	     * some condition is fulfilled.
@@ -95,51 +94,46 @@
 	     * and returns false, but if the continue-callback stops propagation, this
 	     * is still considered a 'successful' operation and returns true.
 	     *
-	     * Lastly, if there are 5 event handlers for an event. The continueCallback
+	     * Lastly, if there are 5 event handlers for an event. The continue_callback
 	     * will be called at most 4 times.
 	     *
-	     * @param string $eventName
+	     * @param string $event_name
 	     * @param array $arguments
-	     * @param callback $continueCallback
+	     * @param callback $continue_callback
 	     * @return bool
 	     */
-	    public function emit($eventName, array $arguments = array(), $continueCallback = null) {
-	    	if($continueCallback !== null && !is_callable($continueCallback)){
-	    		throw new \InvalidArgumentException("Argument 'continueCallback' is not callable.");
+	    public function emit($event_name, array $arguments = array(), $continue_callback = null) {
+	    	if($continue_callback !== null && !is_callable($continue_callback)){
+	    		throw new \InvalidArgumentException("Argument 'continue_callback' is not callable.");
 	    	}
 
-	        if (is_null($continueCallback)) {
-	            foreach($this->listeners($eventName) as $listener) {
-
+	        if (is_null($continue_callback)) {
+	            foreach($this->listeners($event_name) as $listener) {
 	                $result = call_user_func_array($listener, $arguments);
+
 	                if ($result === false) {
 	                    return false;
 	                }
 	            }
-
 	        } else {
-
-	            $listeners = $this->listeners($eventName);
+	            $listeners = $this->listeners($event_name);
 	            $counter = count($listeners);
 
 	            foreach($listeners as $listener) {
-
 	                $counter--;
 	                $result = call_user_func_array($listener, $arguments);
+
 	                if ($result === false) {
 	                    return false;
 	                }
 
 	                if ($counter>0) {
-	                    if (!$continueCallback()) break;
+	                    if (!$continue_callback()) break;
 	                }
-
 	            }
-
 	        }
 
 	        return true;
-
 	    }
 
 	    /**
@@ -148,27 +142,24 @@
 	     * The list is returned as an array, and the list of events are sorted by
 	     * their priority.
 	     *
-	     * @param string $eventName
+	     * @param string $event_name
 	     * @return callable[]
 	     */
-	    public function listeners($eventName) {
-
-	        if (!isset($this->listeners[$eventName])) {
+	    public function listeners($event_name) {
+	        if (!isset($this->listeners[$event_name])) {
 	            return array();
 	        }
 
 	        // The list is not sorted
-	        if (!$this->listeners[$eventName][0]) {
-
+	        if (!$this->listeners[$event_name][0]) {
 	            // Sorting
-	            array_multisort($this->listeners[$eventName][1], SORT_NUMERIC, $this->listeners[$eventName][2]);
+	            array_multisort($this->listeners[$event_name][1], SORT_NUMERIC, $this->listeners[$event_name][2]);
 
 	            // Marking the listeners as sorted
-	            $this->listeners[$eventName][0] = true;
+	            $this->listeners[$event_name][0] = true;
 	        }
 
-	        return $this->listeners[$eventName][2];
-
+	        return $this->listeners[$event_name][2];
 	    }
 
 	    /**
@@ -177,47 +168,46 @@
 	     * If the listener could not be found, this method will return false. If it
 	     * was removed it will return true.
 	     *
-	     * @param string $eventName
+	     * @param string $event_name
 	     * @param callable $listener
 	     * @return bool
 	     */
-	    public function removeListener($eventName, $listener) {
+	    public function removeListener($event_name, $listener) {
 	    	if(!is_callable($listener)){
 	    		throw new \InvalidArgumentException("Argument 'listener' is not callable.");
 	    	}
 
-	        if (!isset($this->listeners[$eventName])) {
+	        if (!isset($this->listeners[$event_name])) {
 	            return false;
 	        }
-	        foreach($this->listeners[$eventName][2] as $index => $check) {
+
+	        foreach($this->listeners[$event_name][2] as $index => $check) {
 	            if ($check === $listener) {
-	                unset($this->listeners[$eventName][1][$index]);
-	                unset($this->listeners[$eventName][2][$index]);
+	                unset($this->listeners[$event_name][1][$index]);
+	                unset($this->listeners[$event_name][2][$index]);
 	                return true;
 	            }
 	        }
-	        return false;
 
+	        return false;
 	    }
 
 	    /**
 	     * Removes all listeners.
 	     *
-	     * If the eventName argument is specified, all listeners for that event are
+	     * If the event_name argument is specified, all listeners for that event are
 	     * removed. If it is not specified, every listener for every event is
 	     * removed.
 	     *
-	     * @param string $eventName
+	     * @param string $event_name
 	     * @return void
 	     */
-	    public function removeAllListeners($eventName = null) {
-
-	        if (!is_null($eventName)) {
-	            unset($this->listeners[$eventName]);
+	    public function removeAllListeners($event_name = null) {
+	        if (!is_null($event_name)) {
+	            unset($this->listeners[$event_name]);
 	        } else {
 	            $this->listeners = array();
 	        }
-
 	    }
 
 	}
