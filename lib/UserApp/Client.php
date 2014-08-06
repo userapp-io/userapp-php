@@ -135,12 +135,12 @@
 				$error_code = strtolower($result->error_code);
 
 				if($error_code == 'invalid_credentials' || $error_code == 'unauthorized'){
-					$this->emit('unauthorized', [$this, $call_context, &$result]);
+					$this->emit('unauthorized', array($this, $call_context, &$result));
 				}
 
-				$this->emit('error', [$this, $call_context, &$result]);
+				$this->emit('error', array($this, $call_context, &$result));
 			}else{
-				$this->emit('success', [$this, $call_context, &$result]);
+				$this->emit('success', array($this, $call_context, &$result));
 			}
 
 			if($generated_exception != null){
