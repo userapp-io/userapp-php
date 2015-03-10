@@ -14,5 +14,3 @@
 			return $this->_error_code;
 		}
 	}
-
-?>

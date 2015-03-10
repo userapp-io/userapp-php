@@ -20,5 +20,3 @@
 			ClientOptions::getGlobal()->set($options);
 		}
 	}
-
-?>

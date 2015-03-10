@@ -76,5 +76,3 @@
 			return self::$_global;
 		}
 	}
-
-?>

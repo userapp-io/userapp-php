@@ -81,5 +81,3 @@
 			$this->_source->_transport = $transport;
 		}
 	}
-
-?>

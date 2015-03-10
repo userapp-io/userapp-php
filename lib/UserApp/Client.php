@@ -19,9 +19,11 @@
 			parent::__construct($this);
 
 			$arguments = func_get_args();
+			$argument_count = count($arguments);
+
 			$options = $this->getOptions();
 
-			for($i=0;$i<count($arguments);++$i){
+			for($i=0;$i<$argument_count;++$i){
 				$argument = $arguments[$i];
 				if($i == count($arguments)-1 && is_array($argument)){
 					$options->set($argument);
@@ -225,5 +227,3 @@
 			return $result;
 		}
 	}
-
-?>

@@ -75,5 +75,3 @@
 			throw new NotSupportedException("Setting the value of a service is not supported.");
 		}
 	}
-
-?>
