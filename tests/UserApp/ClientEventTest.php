@@ -25,7 +25,7 @@
         }
 
         public function testThatEventIsEmittedOnError(){
-            $received_events = [];
+            $received_events = array();
 
             $this->_proxy->on('success', function($sender, $call_context, $result) use (&$received_events){
                 $received_events[] = array('name' => 'success', 'result' => $result);
@@ -44,7 +44,7 @@
 
 
         public function testThatEventIsEmittedOnSuccess(){
-            $received_events = [];
+            $received_events = array();
 
             $this->_proxy->on('success', function($sender, $call_context, $result) use (&$received_events){
                 $received_events[] = array('name' => 'success', 'result' => $result);
